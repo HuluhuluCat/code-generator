@@ -1,0 +1,24 @@
+<#assign className = table.className>
+<#assign classNameLower = className?uncap_first>
+<#include "/macro.include"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${basepackage}.mapper.${module}.${className}Mapper">
+
+    <resultMap id="BaseResultMap" type="${basepackage}.model.${module}.${className}">
+        <#list table.columns as column>
+        <!-- ${column.remarks} -->
+        <#if column.pk >
+        <id column="${column.sqlName}" property="${column.columnNameLower}" jdbcType="${column.jdbcType}" />
+        <#else>
+        <result column="${column.sqlName}" property="${column.columnNameLower}" jdbcType="${column.jdbcType}" />
+        </#if>
+        </#list>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        <#list table.columns as column><#if column_index !=0 >,</#if>t.${column.sqlName}</#list>
+
+    </sql>
+
+</mapper>
